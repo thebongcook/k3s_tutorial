@@ -4,7 +4,7 @@ metadata:
   name: hello-world
   namespace: default
 spec:
-  replicas: 2
+  replicas: 10
   selector:
     matchLabels:
       app: hello-world
@@ -13,6 +13,13 @@ spec:
       labels:
         app: hello-world
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 3
+        topologyKey: zone
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: hello-world
       containers:
         - name: hello-world
           image: bashofmann/rancher-demo:1.0.0
@@ -28,5 +35,3 @@ spec:
             httpGet:
               port: web
               path: /
-      nodeSelector:
-        nodetype: worker
