@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpine01-subdomain
+spec:
+  selector:
+    app: alpine01
+  clusterIP: None
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine01
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alpine01
+  template:
+    metadata:
+      labels:
+        app: alpine01
+    spec:
+      hostname: alpine01
+      subdomain: alpine01-subdomain
+      containers:
+        - name: alpine
+          image: alpine:latest
+          command:
+            - /bin/sh
+            - "-c"
+            - "sleep 60m"
+          imagePullPolicy: IfNotPresent
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpine02-subdomain
+spec:
+  selector:
+    app: alpine02
+  clusterIP: None
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine02
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: alpine02
+  template:
+    metadata:
+      labels:
+        app: alpine02
+    spec:
+      hostname: alpine02
+      subdomain: alpine02-subdomain
+      containers:
+        - name: alpine
+          image: alpine:latest
+          command:
+            - /bin/sh
+            - "-c"
+            - "sleep 60m"
+          imagePullPolicy: IfNotPresent
+  
