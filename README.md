@@ -4,7 +4,7 @@ k3s tutorial is a self-learning toolkit to learn k8s on a raspberry pi cluster
 
 ## Force deployment on worker node
 
-Deployment is distributed automatically by k8s accross nodes based on available resource (eg. memory). However if you want to force deployment on a particular node, in this case worker node, you can do so using [nodeSelector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/).
+Deployment is distributed automatically by k8s across nodes based on available resource (eg. memory). However if you want to force deployment on a particular node, in this case worker node, you can do so using [nodeSelector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/).
 
 First, create the label for the node.
 
@@ -22,12 +22,12 @@ spec:
         nodetype: worker
 ```
 
-## Spread pods accross zones
+## Spread pods across zones
 
 This is similar to zones (and also regions) in GCP.
 The original motivation was to distribute workload between both powerful Raspberry Pi 4 and weak Raspberry Pi 4 nodes. By default all pods would be deployed on the Pi 4.
 
-We can use [topologySpreadConstraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/) to spread pods accross zones (and effectively nodes).
+We can use [topologySpreadConstraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/) to spread pods across zones (and effectively nodes).
 
 First, create the label for the node.
 
