@@ -12,6 +12,8 @@ spec:
 ```
 
 ## Creation of PVC and StatefulSet
+The PVC are created automatically thanks to k3s's dynamic persistent volume provisioning.
+However, it's not auto deleted with the pods, so it needs to be deleted manually as shown [here](#manually-delete-pvc).
 
 ```
 kubectl get pvc -o wide
@@ -61,4 +63,12 @@ PING web-0.default-subdomain.default.svc.cluster.local (10.42.1.33): 56 data byt
 64 bytes from 10.42.1.33: seq=0 ttl=64 time=0.318 ms
 64 bytes from 10.42.1.33: seq=1 ttl=64 time=0.202 ms
 64 bytes from 10.42.1.33: seq=2 ttl=64 time=0.236 ms
+```
+
+## Manually delete PVC
+
+```
+kubectl delete --all pvc
+persistentvolumeclaim "misc-web-0" deleted
+persistentvolumeclaim "misc-web-1" deleted
 ```
