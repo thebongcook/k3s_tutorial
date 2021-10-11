@@ -1,6 +1,12 @@
 # k3s-tutorial
 
-k3s tutorial is a self-learning toolkit to learn k8s on a raspberry pi cluster
+k3s tutorial is a self-learning toolkit to learn k8s on a raspberry pi cluster.
+
+It is inspired and driven by Rancher Labs' [k3s](https://k3s.io/), a lightweight yet highly functional k8s distribution built for IoT & Edge Computing.
+
+## Hacks
+- Force deployment on worker node
+- Spread pods across zones
 
 ## Force deployment on worker node
 
