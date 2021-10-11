@@ -11,7 +11,7 @@ spec:
       storageClassName: local-path
 ```
 
-## After creation of PVC and StatefulSet
+## Creation of PVC and StatefulSet
 
 ```
 kubectl get pvc -o wide
@@ -36,3 +36,29 @@ PING web-0.default-subdomain.default.svc.cluster.local (10.42.1.30): 56 data byt
 ```
 
 ## Auto-healing of pods in `kind: StatefulSet`
+When a pod (web-0) is deleted, it is auto-healed and replaced by another one. Note the (internal) IP of the new pod is different from the deleted one.
+
+```
+kubectl delete pods web-0 &
+[1] 14951
+
+kubectl get pods -o wide
+NAME    READY   STATUS        RESTARTS   AGE     IP           NODE           NOMINATED NODE   READINESS GATES
+web-1   1/1     Running       0          5m26s   10.42.1.31   raspiworker1   <none>           <none>
+web-0   1/1     Terminating   0          86s     10.42.1.32   raspiworker1   <none>           <none>
+
+kubectl get pods -o wide
+NAME    READY   STATUS    RESTARTS   AGE     IP           NODE           NOMINATED NODE   READINESS GATES
+web-1   1/1     Running   0          5m42s   10.42.1.31   raspiworker1   <none>           <none>
+web-0   1/1     Running   0          5s      10.42.1.33   raspiworker1   <none>           <none>
+```
+
+DNS works same as before, now refering to the new IP.
+
+```
+kubectl exec web-1 -- ping web-0.default-subdomain.default.svc.cluster.local
+PING web-0.default-subdomain.default.svc.cluster.local (10.42.1.33): 56 data bytes
+64 bytes from 10.42.1.33: seq=0 ttl=64 time=0.318 ms
+64 bytes from 10.42.1.33: seq=1 ttl=64 time=0.202 ms
+64 bytes from 10.42.1.33: seq=2 ttl=64 time=0.236 ms
+```

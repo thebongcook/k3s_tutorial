@@ -24,6 +24,7 @@ PING alpine02.default-subdomain.default.svc.cluster.local (10.42.0.203): 56 data
 ```
 
 ## Auto-healing of pods in `kind: Pod`
+When a pod (alpine02) is deleted, it is **not** auto-healed and replaced by another one
 
 ### `kubectl delete pods` method
 ```
