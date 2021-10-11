@@ -1,7 +1,15 @@
-# Creation of StatefulSet
+## Using Service and StatefulSet
+Check file [nginx-statefulset.yml](nginx-statefulset.yml) for configuration.
 
 ## Creation of PVC
 Please note, `storageClassName: local-path` is required for PVC to be create on k3s as mentioned [here](https://rancher.com/docs/k3s/latest/en/storage/#pvc-yaml)
+
+```
+spec:
+  volumeClaimTemplates:
+    spec:
+      storageClassName: local-path
+```
 
 ## After creation of PVC and StatefulSet
 
@@ -16,3 +24,5 @@ NAME    READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATE
 web-0   1/1     Running   0          98s   10.42.1.109   raspiworker1   <none>           <none>
 web-1   1/1     Running   0          34s   10.42.1.111   raspiworker1   <none>           <none>
 ```
+
+## Auto-healing of pods in `kind: StatefulSet`
