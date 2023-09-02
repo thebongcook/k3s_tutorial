@@ -25,5 +25,5 @@ spec:
             httpGet:
               port: web
               path: /
-      nodeSelector:
-        nodetype: worker
+      # nodeSelector:
+      #   nodetype: worker
